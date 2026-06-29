@@ -57,7 +57,7 @@ const generateMockLogs = (): LogEntry[] => {
 const mockLogs = generateMockLogs();
 
 const Logs = () => {
-  const [timeFilter, setTimeFilter] = useState<'all' | 'daily' | 'weekly' | 'yearly'>('daily');
+  const [timeFilter, setTimeFilter] = useState<'all' | 'daily' | 'weekly' | 'monthly' | 'yearly'>('daily');
   const [expandedDays, setExpandedDays] = useState<Record<string, boolean>>({});
 
   const toggleDay = (dayStr: string) => {
@@ -74,6 +74,7 @@ const Logs = () => {
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         if (timeFilter === 'daily') return diffDays <= 1;
         if (timeFilter === 'weekly') return diffDays <= 7;
+        if (timeFilter === 'monthly') return diffDays <= 30;
         if (timeFilter === 'yearly') return diffDays <= 365;
         return true;
       });
@@ -507,6 +508,7 @@ const Logs = () => {
                 <SelectItem value="all">All Time</SelectItem>
                 <SelectItem value="daily">Past 24 Hours</SelectItem>
                 <SelectItem value="weekly">Past 7 Days</SelectItem>
+                <SelectItem value="monthly">Past Month</SelectItem>
                 <SelectItem value="yearly">Past Year</SelectItem>
               </SelectContent>
             </Select>
